@@ -1,2 +1,2 @@
-# mission-puzzletime-browser-extension
-A browser extention for create PuzzleTime entries
+# poc-puzzletime-ext
+A proof of concept for a browser extension to easily create PuzzleTime entries.
