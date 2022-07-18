@@ -1,0 +1,26 @@
+{
+  "manifest_version":2,
+  "version":"1.0",
+  "name":"PuzzleTime Browserextension",
+  "content_scripts":[
+    {
+      "matches":["<all_urls>"],
+      "js":["main.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "527531.jpg"
+  ],
+  "browser_action":{
+    "default_icon":"puzzleTime.png",
+    "default_popup": "popup.html",
+    "default_title": "PuzzleTime Browser extension"
+  },
+  "background":{
+    "scripts":["background.js"]
+  },
+  "permissions":[
+    "tabs"
+  ]
+
+}
