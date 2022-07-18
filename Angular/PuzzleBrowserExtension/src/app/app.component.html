@@ -1,2 +1,2 @@
-<app-time-preset *ngFor="let test of [].constructor(5)"></app-time-preset>
+<app-time-preset *ngFor="let preset of presetsService.presets" [data]="preset"></app-time-preset>
 
