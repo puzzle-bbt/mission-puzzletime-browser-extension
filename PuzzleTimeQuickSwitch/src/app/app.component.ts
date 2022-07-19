@@ -12,7 +12,7 @@ import {StorageController} from "./helper/StorageController";
 })
 export class AppComponent {
   title = 'PuzzleBrowserExtension';
-  data: timePresetModel[] = [];
+  data: timePresetModel[];
   @ViewChild(MatSort) sort: MatSort;
   dataSource: MatTableDataSource<any>;
   public pageSize = 5;
@@ -24,7 +24,6 @@ export class AppComponent {
     "description",
     "billable",
     "mealCompensation",
-    "update",
     "delete"
   ];
 
@@ -41,24 +40,27 @@ export class AppComponent {
         .reduce((curObj, property) => curObj[property], data);
       return !isNaN(value) ? Number(value) : value;
     };
-  }
-
-
-  ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.iterator();
   }
 
-  delete(element:any): void {
 
+  ngAfterViewInit() {
+
+  }
+
+  delete(element: timePresetModel) {
+    StorageController.getPresets().then((result)=>{
+      let index:number = result.map(e=> JSON.stringify(e)).indexOf(JSON.stringify(element))
+      result.splice(index,1);
+      this.data = result;
+      this.dataSource.data = this.data;
+      StorageController.setPresets(this.data);
+    });
   }
 
   update(element:any): void {
 
-  }
-
-  getDateOfDateObject(date: Date): string {
-    return new Date(date).toDateString();
   }
 
   public handlePage(e: any) {

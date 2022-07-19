@@ -22,4 +22,12 @@ export class StorageController {
     }
     return JSON.parse(atob(encrypted)) as timePresetModel[]
   }
+
+  static setPresets(presets: timePresetModel[]){
+    chrome.storage.sync.set({"presets": this.encodePresets(presets)}).then();
+  }
+
+  private static encodePresets(presets: timePresetModel[]) {
+    return btoa(JSON.stringify(presets))
+  }
 }
