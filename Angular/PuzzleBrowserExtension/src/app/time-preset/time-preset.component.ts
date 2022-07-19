@@ -12,5 +12,4 @@ export class TimePresetComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

@@ -2,7 +2,7 @@
   "name": "PuzzleTime Angular",
   "version": "2.0",
   "description": "You can take notes, which includes text, lists, links & images. We can export our notes in the form of html..",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "permissions": [
     "activeTab",
     "webNavigation",
@@ -15,10 +15,8 @@
       "js":["background.js"]
     }
   ],
-  "background": {
-    "scripts": ["background.js"]
-  },
-  "browser_action": {
+
+  "action": {
     "default_icon": {
       "19": "assets/puzzleTime.png",
       "38": "assets/puzzleTime.png"

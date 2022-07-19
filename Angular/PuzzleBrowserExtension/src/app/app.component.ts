@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {StorageController} from 'src/StorageController';
+import {timePresetModel} from "./models/timePreset";
 
 @Component({
   selector: 'app-root',
@@ -7,22 +9,14 @@ import {Component, OnInit} from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'PuzzleBrowserExtension';
-  test:string = "Hmmm"
+  test: string = "Hmmm"
+  data: timePresetModel[] = [];
+  shown: boolean = false;
 
   constructor() {
   }
 
-  ngOnInit() {
-    console.log("test")
-    this.test = "yeet"
-    sessionStorage.setItem('test','testhallo')
-    this.title = sessionStorage.getItem('test');
-    debugger;
-    this.test = sessionStorage.getItem("data").length as unknown as string;
-    chrome.storage.sync.get('data', ({ data }) => {
-      this.test = data;
-    });
-    console.error("test");
-    // console.log("test")
+  async ngOnInit() {
+    this.data = await StorageController.getPresets();
   }
 }

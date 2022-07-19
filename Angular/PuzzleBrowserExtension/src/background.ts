@@ -1,10 +1,11 @@
 import {timePresetModel} from "./app/models/timePreset";
+import {StorageController} from "./StorageController";
 
 
 let btn = document.createElement("button");
 btn.innerHTML = "Add as preset";
-btn.onclick = () => {
-  let accountName: string = document.getElementById("ordertime_account_id-selectized").parentNode.childNodes[0].textContent;
+btn.addEventListener("click", () => {
+  let accountName: string = document.getElementById("ordertime_account_id-selectized")?.parentNode?.childNodes[0]?.textContent;
   let ticket: string = document.getElementById("ordertime_ticket")["value"];
   let description: string = document.getElementById("ordertime_description")["value"];
   let mealCompensation: boolean = document.getElementById("ordertime_meal_compensation")["value"];
@@ -16,14 +17,21 @@ btn.onclick = () => {
     mealCompensation: mealCompensation,
     billable: billable
   };
-  let data:string = btoa(JSON.stringify(timePreset));
-  sessionStorage.setItem("data",data);
-  setValue(data);
-}
-
-function setValue(data: string) {
-  chrome.storage.sync.set({data}).then();
-}
+  addPreset(timePreset).then(r => r);
+});
 
 let container = document.getElementById("content")
 container.appendChild(btn);
+
+
+async function addPreset(preset: timePresetModel) {
+  let data = await StorageController.getPresets();
+  data.push(preset)
+  chrome.storage.sync.set({"presets": encodePresets(data)}).then();
+}
+
+function encodePresets(presets: timePresetModel[]) {
+  return btoa(JSON.stringify(presets))
+}
+
+
