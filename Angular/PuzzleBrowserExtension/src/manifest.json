@@ -1,7 +1,7 @@
 {
-  "name": "PuzzleTime Angular",
+  "name": "PuzzleTime QuickChange",
   "version": "2.0",
-  "description": "You can take notes, which includes text, lists, links & images. We can export our notes in the form of html..",
+  "description": "You can use this extensions to quick switch between different presets of task",
   "manifest_version": 3,
   "permissions": [
     "activeTab",
@@ -22,12 +22,5 @@
       "38": "assets/puzzleTime.png"
     },
     "default_popup": "index.html"
-  },
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "addon@example.com",
-      "strict_min_version": "42.0"
-    }
   }
-
 }

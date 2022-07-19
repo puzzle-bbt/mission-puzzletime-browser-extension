@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {StorageController} from 'src/StorageController';
+import {StorageController} from 'src/app/helper/StorageController';
 import {timePresetModel} from "./models/timePreset";
 
 @Component({

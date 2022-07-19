@@ -1,4 +1,4 @@
-import {timePresetModel} from "./app/models/timePreset";
+import {timePresetModel} from "../models/timePreset";
 
 export class StorageController {
   static async getLocalStorageValue(key) {

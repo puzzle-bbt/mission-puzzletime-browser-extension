@@ -1,5 +1,5 @@
 import {timePresetModel} from "./app/models/timePreset";
-import {StorageController} from "./StorageController";
+import {StorageController} from "./app/helper/StorageController";
 
 
 let btn = document.createElement("button");
