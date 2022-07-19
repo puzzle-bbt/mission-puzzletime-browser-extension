@@ -1,0 +1,64 @@
+<p>{{data.length}}</p>
+<div class="d-flex flex-column justify-content-center">
+  <table [dataSource]="dataSource" class="mat-elevation-z8 w-100" mat-table matSort>
+
+    <ng-container matColumnDef="account">
+      <th *matHeaderCellDef mat-header-cell>
+        <p>Buchungsposition</p>
+      </th>
+      <td *matCellDef="let element" mat-cell>
+        <p>{{element.accountName}}</p>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ticket">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="ticket" sortActionDescription="Sort by date">Ticket</th>
+      <td *matCellDef="let element" mat-cell> {{element.ticket}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="description" sortActionDescription="Sort by start time">
+        Beschreibung
+      </th>
+      <td *matCellDef="let element" mat-cell> {{element.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="billable">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="mealCompensation" sortActionDescription="Sort by end time">
+        Verrechenbar
+      </th>
+      <td *matCellDef="let element" mat-cell> {{element.billable}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="mealCompensation">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="mealCompensation" sortActionDescription="Sort by task">
+        Verpflegungsentschädigung
+      </th>
+      <td *matCellDef="let element" mat-cell> {{element.mealCompensation}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="update">
+      <th *matHeaderCellDef mat-header-cell></th>
+      <td *matCellDef="let element" mat-cell>
+        <button (click)="update(element)" class="icon" role="button">
+          <mat-icon>edit_note</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th *matHeaderCellDef mat-header-cell></th>
+      <td *matCellDef="let element" mat-cell>
+        <button (click)="delete(element)" class="icon" role="button">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+  </table>
+  <mat-paginator (page)="handlePage($event)" [length]="data.length" [pageSizeOptions]="[5, 10, 20]" [pageSize]="pageSize"
+                 class="w-100">
+  </mat-paginator>
+</div>

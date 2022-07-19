@@ -3,14 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "PuzzleBrowserExtension": {
+    "PuzzleTimeQuickSwitch": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
         }
       },
       "root": "",
@@ -23,7 +20,7 @@
             "customWebpackConfig": {
               "path": "./custom-webpack.config.ts"
             },
-            "outputPath": "dist/puzzle-browser-extension",
+            "outputPath": "dist/puzzle-time-quick-switch",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -35,6 +32,7 @@
               "src/manifest.json"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
@@ -47,8 +45,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -79,10 +77,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "PuzzleBrowserExtension:build:production"
+              "browserTarget": "PuzzleTimeQuickSwitch:build:production"
             },
             "development": {
-              "browserTarget": "PuzzleBrowserExtension:build:development"
+              "browserTarget": "PuzzleTimeQuickSwitch:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -90,7 +88,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "PuzzleBrowserExtension:build"
+            "browserTarget": "PuzzleTimeQuickSwitch:build"
           }
         },
         "test": {
@@ -106,6 +104,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -115,6 +114,6 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": "25414eb9-d37a-4f1e-ac85-593e089fd400"
   }
 }
