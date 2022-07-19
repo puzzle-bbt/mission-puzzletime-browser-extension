@@ -4,6 +4,7 @@ import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {StorageController} from "./helper/StorageController";
+import {moveItemInArray} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-root',
@@ -11,13 +12,14 @@ import {StorageController} from "./helper/StorageController";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'PuzzleBrowserExtension';
-  data: timePresetModel[];
   @ViewChild(MatSort) sort: MatSort;
-  dataSource: MatTableDataSource<any>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   public pageSize = 5;
   public currentPage = 0;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  title = 'PuzzleBrowserExtension';
+  data: timePresetModel[];
+  dataSource: MatTableDataSource<any>;
+  ticketStartTime: Date;
   displayedColumns: string[] = [
     "account",
     "ticket",
@@ -50,16 +52,16 @@ export class AppComponent {
   }
 
   delete(element: timePresetModel) {
-    StorageController.getPresets().then((result)=>{
-      let index:number = result.map(e=> JSON.stringify(e)).indexOf(JSON.stringify(element))
-      result.splice(index,1);
+    StorageController.getPresets().then((result) => {
+      let index: number = this.indexOfElement(result, element);
+      result.splice(index, 1);
       this.data = result;
       this.dataSource.data = this.data;
       StorageController.setPresets(this.data);
     });
   }
 
-  update(element:any): void {
+  update(element: any): void {
 
   }
 
@@ -74,4 +76,29 @@ export class AppComponent {
     const end = (this.currentPage + 1) * this.pageSize;
     this.dataSource.data = this.data.slice(start, Math.min(this.data.length, end));
   }
+
+  getRecord(row: timePresetModel) {
+    this.ticketStartTime = new Date();
+    let index: number = this.indexOfElement(this.data, row)
+    moveItemInArray(this.data, index, 0);
+    this.dataSource.data = this.data;
+  }
+
+  indexOfElement(array:any[], element): number {
+    return array.map(e => JSON.stringify(e)).indexOf(JSON.stringify(element))
+  }
+
+  isPresetSelected(): boolean {
+    return typeof this.ticketStartTime == "object";
+  }
+
+  submit() {
+    let timePresetModel = this.data[0];
+    let start = this.ticketStartTime.getTime();
+    let workTimeMilli = new Date().getTime() -start;
+    let workTimeMin = workTimeMilli / 1000 /60;
+    this.ticketStartTime = undefined;
+    console.log(workTimeMin)
+  }
 }
+

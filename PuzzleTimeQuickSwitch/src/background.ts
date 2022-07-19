@@ -17,8 +17,6 @@ btn.addEventListener("click", () => {
     mealCompensation: mealCompensation,
     billable: billable
   });
-  console.log(timePreset)
-  console.log(isObjectPropertyNull(timePreset))
   if (!isObjectPropertyNull(timePreset)) {
     addPreset(timePreset).then(r => r);
   }
@@ -29,15 +27,16 @@ container.appendChild(btn);
 
 async function addPreset(preset: timePresetModel) {
   let data = await StorageController.getPresets();
-  data.push(preset)
-  StorageController.setPresets(data);
-  console.log(await StorageController.getPresets())
+  if (data.map(e => JSON.stringify(e)).indexOf(JSON.stringify(preset)) == -1) {
+    data.push(preset)
+    StorageController.setPresets(data);
+  }
 }
 
 function isObjectPropertyNull(preset: timePresetModel) {
-    return preset?.accountName=="" ||
-      preset?.ticket == "" ||
-      preset?.description == "" ;
+  return preset?.accountName == "" ||
+    preset?.ticket == "" ||
+    preset?.description == "";
 
 
 }
