@@ -1,9 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
-import {timePresetModel} from "./models/timePreset";
+import {TimePresetModel} from "../models/timePreset";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
-import {StorageController} from "./helper/StorageController";
+import {StorageController} from "../helper/StorageController";
 import {moveItemInArray} from "@angular/cdk/drag-drop";
 
 @Component({
@@ -17,11 +17,11 @@ export class AppComponent {
   public pageSize = 5;
   public currentPage = 0;
   title = 'PuzzleBrowserExtension';
-  data: timePresetModel[];
+  data: TimePresetModel[];
   dataSource: MatTableDataSource<any>;
   ticketStartTime: Date;
   displayedColumns: string[] = [
-    "account",
+    "puzzleAccount.name",
     "ticket",
     "description",
     "billable",
@@ -29,41 +29,35 @@ export class AppComponent {
     "delete"
   ];
 
-  constructor() {
+  ngOnInit() {
+    StorageController.getValue(StorageController.KEY_DATE).then(r=>{
+      this.ticketStartTime = r as Date;
+    });
+    StorageController.getPresets().then(r=>{
+      this.data = r;
+      this.dataSource = new MatTableDataSource(this.data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sortingDataAccessor = (data: object, sortHeaderId: string): string | number => {
+        const propPath = sortHeaderId.split('.');
+        const value: any = propPath
+          .reduce((curObj, property) => curObj[property], data);
+        return !isNaN(value) ? Number(value) : value;
+      };
+      this.dataSource.sort = this.sort;
+      this.iterator();
+    });
   }
 
-  async ngOnInit() {
-    this.data = await StorageController.getPresets();
-    this.dataSource = new MatTableDataSource(this.data);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sortingDataAccessor = (data: object, sortHeaderId: string): string | number => {
-      const propPath = sortHeaderId.split('.');
-      const value: any = propPath
-        .reduce((curObj, property) => curObj[property], data);
-      return !isNaN(value) ? Number(value) : value;
-    };
-    this.dataSource.sort = this.sort;
-    this.iterator();
-  }
-
-
-  ngAfterViewInit() {
-
-  }
-
-  delete(element: timePresetModel) {
+  delete(element: TimePresetModel) {
     StorageController.getPresets().then((result) => {
       let index: number = this.indexOfElement(result, element);
       result.splice(index, 1);
       this.data = result;
       this.dataSource.data = this.data;
-      StorageController.setPresets(this.data);
+      StorageController.saveValue(StorageController.KEY_PRESETS,this.data);
     });
   }
 
-  update(element: any): void {
-
-  }
 
   public handlePage(e: any) {
     this.currentPage = e.pageIndex;
@@ -77,11 +71,13 @@ export class AppComponent {
     this.dataSource.data = this.data.slice(start, Math.min(this.data.length, end));
   }
 
-  getRecord(row: timePresetModel) {
+  startWork(row: TimePresetModel) {
     this.ticketStartTime = new Date();
     let index: number = this.indexOfElement(this.data, row)
     moveItemInArray(this.data, index, 0);
     this.dataSource.data = this.data;
+    StorageController.saveValue(StorageController.KEY_PRESETS, this.data);
+    StorageController.saveValue(StorageController.KEY_DATE, this.ticketStartTime);
   }
 
   indexOfElement(array:any[], element): number {
@@ -89,16 +85,16 @@ export class AppComponent {
   }
 
   isPresetSelected(): boolean {
-    return typeof this.ticketStartTime == "object";
+    return typeof this.ticketStartTime != "undefined";
   }
 
   submit() {
     let timePresetModel = this.data[0];
-    let start = this.ticketStartTime.getTime();
-    let workTimeMilli = new Date().getTime() -start;
+    let start = new Date(this.ticketStartTime).getTime();
+    let workTimeMilli = new Date().getTime() - start;
     let workTimeMin = workTimeMilli / 1000 /60;
     this.ticketStartTime = undefined;
-    console.log(workTimeMin)
+    chrome.storage.sync.remove(StorageController.KEY_DATE);
   }
 }
 

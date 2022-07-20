@@ -4,12 +4,13 @@
 </div>
 <p class="display-4">Test</p>
 <table [dataSource]="dataSource" class="mat-elevation-z8 w-100" mat-table matSort>
-  <ng-container matColumnDef="account">
+
+  <ng-container matColumnDef="puzzleAccount.name">
     <th *matHeaderCellDef mat-header-cell mat-sort-header="account" sortActionDescription="Sort by account">
       <mat-icon>apartment</mat-icon>
     </th>
     <td *matCellDef="let element" mat-cell>
-      <p>{{element.accountName}}</p>
+      <p>{{element.puzzleAccount?.name}}</p>
     </td>
   </ng-container>
 
@@ -58,9 +59,9 @@
   </ng-container>
 
   <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-  <tr *matRowDef="let row; columns: displayedColumns;" mat-row (click)="getRecord(row)" [ngStyle]="{'background-color': (isPresetSelected() && indexOfElement(this.data, row) == 0) ? 'green' : '' }"></tr>
+  <tr *matRowDef="let row; columns: displayedColumns;" mat-row (click)="startWork(row)" [ngStyle]="{'background-color': (isPresetSelected() && indexOfElement(this.data, row) == 0) ? 'blue' : '' }"></tr>
 </table>
-<mat-paginator (page)="handlePage($event)" [length]="this.data.length" [pageSize]="pageSize"
+<mat-paginator (page)="handlePage($event)" [length]="this.data?.length" [pageSize]="pageSize"
                class="w-100">
 </mat-paginator>
 
