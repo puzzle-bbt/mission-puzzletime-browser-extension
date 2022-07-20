@@ -1,6 +1,5 @@
 import {TimePresetModel} from "./models/timePreset";
 import {StorageController} from "./helper/StorageController";
-import restart = chrome.runtime.restart;
 import {Account} from "./models/account";
 
 
@@ -11,13 +10,13 @@ btn.addEventListener("click", () => {
   let accountID: string = (document.getElementById("ordertime_account_id-selectized")?.parentNode?.childNodes[0] as HTMLElement).getAttribute("data-value");
   let ticket: string = document.getElementById("ordertime_ticket")["value"];
   let description: string = document.getElementById("ordertime_description")["value"];
-  let mealCompensation: boolean = document.getElementById("ordertime_meal_compensation")["checked"];
+  // let mealCompensation: boolean = document.getElementById("ordertime_meal_compensation")["checked"];
   let billable: boolean = document.getElementById("ordertime_billable")["checked"];
   let timePreset: TimePresetModel = new TimePresetModel({
     puzzleAccount: new Account({id: +accountID, name: accountName}),
     ticket: ticket,
     description: description,
-    mealCompensation: mealCompensation,
+    mealCompensation: true,
     billable: billable
   });
   console.log(timePreset)

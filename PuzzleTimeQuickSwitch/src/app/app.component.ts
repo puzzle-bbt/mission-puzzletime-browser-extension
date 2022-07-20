@@ -5,6 +5,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {StorageController} from "../helper/StorageController";
 import {moveItemInArray} from "@angular/cdk/drag-drop";
+import {OrdertimesService} from "../ordertimes.service";
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,8 @@ export class AppComponent {
     "mealCompensation",
     "delete"
   ];
+  constructor(private _ordertimeService: OrdertimesService) {
+  }
 
   ngOnInit() {
     StorageController.getValue(StorageController.KEY_DATE).then(r=>{
@@ -95,6 +98,9 @@ export class AppComponent {
     let workTimeMin = workTimeMilli / 1000 /60;
     this.ticketStartTime = undefined;
     chrome.storage.sync.remove(StorageController.KEY_DATE);
+    this._ordertimeService.setOrderTime(timePresetModel).subscribe((r)=>{
+      console.log(r)
+    });
   }
 }
 
