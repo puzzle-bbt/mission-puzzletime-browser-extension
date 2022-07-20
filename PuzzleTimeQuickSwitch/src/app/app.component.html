@@ -1,67 +1,70 @@
 <img src="assets/puzzleTime.png" alt="" width="100" height="50">
-<div class="w-100 d-flex justify-content-end">
-  <button mat-stroked-button color="warn" [disabled]="!isPresetSelected()" (click)="submit()">Eintrag abschliessen</button>
+<div *ngIf="this.data?.length !=0">
+  <div class="w-100 d-flex justify-content-end">
+    <button mat-stroked-button color="warn" [disabled]="!isPresetSelected()" (click)="submit()">Eintrag abschliessen</button>
+  </div>
+  <table [dataSource]="dataSource" class="mat-elevation-z8 w-100" mat-table matSort>
+
+    <ng-container matColumnDef="puzzleAccount.name">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="account" sortActionDescription="Sort by account">
+        <mat-icon>apartment</mat-icon>
+      </th>
+      <td *matCellDef="let element" mat-cell>
+        <p>{{element.puzzleAccount?.name}}</p>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ticket">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="ticket" sortActionDescription="Sort by date">
+        <mat-icon>newspaper</mat-icon>
+      </th>
+      <td *matCellDef="let element" mat-cell> {{element.ticket}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="description" sortActionDescription="Sort by description">
+        <mat-icon>description</mat-icon>
+      </th>
+      <td *matCellDef="let element" mat-cell> {{element.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="billable">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="billable" sortActionDescription="Sort by bill ability">
+        <mat-icon>payments</mat-icon>
+      </th>
+      <td *matCellDef="let element" mat-cell>
+        <mat-icon *ngIf="element.billable">done</mat-icon>
+        <mat-icon *ngIf="!element.billable">close</mat-icon>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="mealCompensation">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="mealCompensation"
+          sortActionDescription="Sort by meal compensation">
+        <mat-icon>restaurant</mat-icon>
+      </th>
+      <td *matCellDef="let element" mat-cell>
+        <mat-icon *ngIf="element.mealCompensation">done</mat-icon>
+        <mat-icon *ngIf="!element.mealCompensation">close</mat-icon>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th *matHeaderCellDef mat-header-cell></th>
+      <td *matCellDef="let element" mat-cell>
+        <button (click)="delete(element)" class="icon" role="button">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row (click)="startWork(row)" [ngStyle]="{'background-color': (isPresetSelected() && indexOfElement(this.data, row) == 0) ? 'blue' : '' }"></tr>
+  </table>
+  <mat-paginator (page)="handlePage($event)" [length]="this.data?.length" [pageSize]="pageSize"
+                 class="w-100">
+  </mat-paginator>
 </div>
-<p class="display-4">Test</p>
-<table [dataSource]="dataSource" class="mat-elevation-z8 w-100" mat-table matSort>
 
-  <ng-container matColumnDef="puzzleAccount.name">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header="account" sortActionDescription="Sort by account">
-      <mat-icon>apartment</mat-icon>
-    </th>
-    <td *matCellDef="let element" mat-cell>
-      <p>{{element.puzzleAccount?.name}}</p>
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="ticket">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header="ticket" sortActionDescription="Sort by date">
-      <mat-icon>newspaper</mat-icon>
-    </th>
-    <td *matCellDef="let element" mat-cell> {{element.ticket}}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="description">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header="description" sortActionDescription="Sort by description">
-      <mat-icon>description</mat-icon>
-    </th>
-    <td *matCellDef="let element" mat-cell> {{element.description}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="billable">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header="billable" sortActionDescription="Sort by bill ability">
-      <mat-icon>payments</mat-icon>
-    </th>
-    <td *matCellDef="let element" mat-cell>
-      <mat-icon *ngIf="element.billable">done</mat-icon>
-      <mat-icon *ngIf="!element.billable">close</mat-icon>
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="mealCompensation">
-    <th *matHeaderCellDef mat-header-cell mat-sort-header="mealCompensation"
-        sortActionDescription="Sort by meal compensation">
-      <mat-icon>restaurant</mat-icon>
-    </th>
-    <td *matCellDef="let element" mat-cell>
-      <mat-icon *ngIf="element.mealCompensation">done</mat-icon>
-      <mat-icon *ngIf="!element.mealCompensation">close</mat-icon>
-    </td>
-  </ng-container>
-
-  <ng-container matColumnDef="delete">
-    <th *matHeaderCellDef mat-header-cell></th>
-    <td *matCellDef="let element" mat-cell>
-      <button (click)="delete(element)" class="icon" role="button">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </td>
-  </ng-container>
-
-  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-  <tr *matRowDef="let row; columns: displayedColumns;" mat-row (click)="startWork(row)" [ngStyle]="{'background-color': (isPresetSelected() && indexOfElement(this.data, row) == 0) ? 'blue' : '' }"></tr>
-</table>
-<mat-paginator (page)="handlePage($event)" [length]="this.data?.length" [pageSize]="pageSize"
-               class="w-100">
-</mat-paginator>
+<p *ngIf="this.data?.length ==0">No Elements found. Add a preset to use the application</p>
 
