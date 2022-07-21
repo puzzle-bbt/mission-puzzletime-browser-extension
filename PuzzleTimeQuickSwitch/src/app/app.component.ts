@@ -6,7 +6,6 @@ import {MatPaginator} from "@angular/material/paginator";
 import {StorageController} from "../helper/StorageController";
 import {moveItemInArray} from "@angular/cdk/drag-drop";
 import {OrdertimesService} from "../ordertimes.service";
-import tabId = chrome.devtools.inspectedWindow.tabId;
 
 @Component({
   selector: 'app-root',
@@ -109,4 +108,3 @@ export class AppComponent {
     }
   }
 }
-

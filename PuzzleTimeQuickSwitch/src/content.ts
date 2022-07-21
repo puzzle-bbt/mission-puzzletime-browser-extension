@@ -20,11 +20,8 @@ btn.addEventListener("click", () => {
     billable: billable
   });
 
-
   if (!isObjectPropertyNull(timePreset)) {
     addPreset(timePreset);
-
-
   } else {
     alert("Bitte alle Felder ausfüllen");
   }
@@ -49,7 +46,3 @@ function isObjectPropertyNull(preset: TimePresetModel) {
     preset?.ticket == "" ||
     preset?.description == "";
 }
-
-
-
-
