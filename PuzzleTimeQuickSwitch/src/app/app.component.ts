@@ -99,6 +99,9 @@ export class AppComponent {
     let workTimeMilli = new Date().getTime() - start;
     let workTimeHour = workTimeMilli / 1000 / 60 /60;
     workTimeHour = Math.round((workTimeHour + Number.EPSILON) * 100) / 100;
+
+
+    //
     if(workTimeHour > 0.00){
       this.ticketStartTime = undefined;
       chrome.storage.sync.remove(StorageController.KEY_DATE);
