@@ -8,49 +8,35 @@ import {BodyBuilder} from "./helper/BodyBuilder";
   providedIn: 'root'
 })
 export class OrdertimesService {
-  private readonly httpOptions: { headers: HttpHeaders };
 
-  constructor(private _http: HttpClient) {
-    this.httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/www-x-form-urlencoded',
-        'Origin': BASE_URL,
-        "Cookie": "e007d911eff228f4cbacf657e39edefb=cdd06e20087fd08facb50d3503694fb9; _session_id=6a5f0e0b736633c81466fd6fbaa60ab2"
-      })
-    }
+  constructor(private _http: HttpClient) {}
+
+  public getLoginPage(): any {
+    return this._http.get(NEW_ORDER_TIME, {responseType: 'text'});
   }
 
-public getLoginPage(): any {
-    return this._http.get(NEW_ORDER_TIME, {responseType: 'text'});
-
-}
-
   public setOrderTime(preset: TimePresetModel, hours: number) {
-
-    this.getLoginPage().subscribe((result)=>{
+    this.getLoginPage().subscribe((result) => {
       let doc = new DOMParser().parseFromString(result, "text/html");
       let form = doc.getElementById("new_ordertime")
       let authenticity_token = form["elements"]["authenticity_token"]["value"];
       let newBody = this.buildBody(preset, hours, authenticity_token);
-      this.getTab().then(tabID => {
-          chrome.scripting.executeScript({
-            target: {tabId: tabID},
-            func: this.sendRequest,
-            args: [newBody]
-          });
+
+      this.getTabID().then((tabID) => {
+        if (tabID == -1) {
+          alert("Open " + BASE_URL + " and try again");
+          return;
         }
-      );
+        chrome.scripting.executeScript({
+          target: {tabId: tabID},
+          func: this.sendRequest,
+          args: [newBody]
+        });
+      });
     });
-
   }
 
-  async getTab() {
-    let queryOptions = {active: true, currentWindow: true};
-    let tabs = await chrome.tabs.query(queryOptions);
-    return tabs[0].id;
-  }
-
-  public buildBody(preset: TimePresetModel, hours: number, authenticity_token:string) {
+  public buildBody(preset: TimePresetModel, hours: number, authenticity_token: string) {
     const formData = new BodyBuilder();
     formData.set('utf8', "✓");
     formData.set('authenticity_token', authenticity_token);
@@ -67,7 +53,7 @@ public getLoginPage(): any {
   }
 
   sendRequest = (body: string) => {
-    fetch("https://pitc-puzzletime-int.ocp.cloudscale.puzzle.ch/ordertimes", {
+    fetch(ORDER_TIME, {
       "headers": {
         "content-type": "application/x-www-form-urlencoded",
       },
@@ -75,16 +61,6 @@ public getLoginPage(): any {
       "method": "POST",
     });
   }
-
-  // getValue(data: string){
-  //   let values = data.split("&");
-  //   let result = new Map<string, string>;
-  //   for (let valuePair of values){
-  //     let valuePairArray = valuePair.split("=")
-  //     result.set(decodeURIComponent(valuePairArray[0]), decodeURIComponent(valuePairArray[1]));
-  //   }
-  //   console.log(result)
-  // }
 
   padTo2Digits(num) {
     return num.toString().padStart(2, '0');
@@ -96,6 +72,17 @@ public getLoginPage(): any {
       this.padTo2Digits(date.getMonth() + 1),
       date.getFullYear(),
     ].join('/');
+  }
+
+  async getTabID(): Promise<number> {
+    let tabs = await chrome.tabs.query({});
+    for (let tab of tabs) {
+      let url1 = new URL(tab.url);
+      if (url1.origin == BASE_URL) {
+        return tab.id
+      }
+    }
+    return -1;
   }
 }
 
