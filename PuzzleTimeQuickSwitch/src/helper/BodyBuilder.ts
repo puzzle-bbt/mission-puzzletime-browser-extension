@@ -1,15 +1,18 @@
 export class BodyBuilder {
-  parameters = new Map<string, string>([]);
+  parameters = [];
 
   public set(name: string, value: string) {
-    this.parameters.set(name, value);
+    this.parameters.push([name, value]);
   }
 
   public encode() {
     let result = "";
-    this.parameters.forEach((value: string, key: string) => {
-      result += key + "=" + encodeURI(value) + "&";
-    });
-    return result;
+    for(let parameter of this.parameters){
+      let key = parameter[0];
+      let value = parameter[1];
+      result += encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&";
+    }
+
+    return result.slice(0,result.length-1);
   }
 }

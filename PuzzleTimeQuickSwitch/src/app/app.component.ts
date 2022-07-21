@@ -6,6 +6,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {StorageController} from "../helper/StorageController";
 import {moveItemInArray} from "@angular/cdk/drag-drop";
 import {OrdertimesService} from "../ordertimes.service";
+import tabId = chrome.devtools.inspectedWindow.tabId;
 
 @Component({
   selector: 'app-root',
@@ -29,14 +30,15 @@ export class AppComponent {
     "mealCompensation",
     "delete"
   ];
+
   constructor(private _ordertimeService: OrdertimesService) {
   }
 
   ngOnInit() {
-    StorageController.getValue(StorageController.KEY_DATE).then(r=>{
+    StorageController.getValue(StorageController.KEY_DATE).then(r => {
       this.ticketStartTime = r as Date;
     });
-    StorageController.getPresets().then(r=>{
+    StorageController.getPresets().then(r => {
       this.data = r;
       this.dataSource = new MatTableDataSource(this.data);
       this.dataSource.paginator = this.paginator;
@@ -57,7 +59,7 @@ export class AppComponent {
       result.splice(index, 1);
       this.data = result;
       this.dataSource.data = this.data;
-      StorageController.saveValue(StorageController.KEY_PRESETS,this.data);
+      StorageController.saveValue(StorageController.KEY_PRESETS, this.data);
     });
   }
 
@@ -83,7 +85,7 @@ export class AppComponent {
     StorageController.saveValue(StorageController.KEY_DATE, this.ticketStartTime);
   }
 
-  indexOfElement(array:any[], element): number {
+  indexOfElement(array: any[], element): number {
     return array.map(e => JSON.stringify(e)).indexOf(JSON.stringify(element))
   }
 
@@ -95,12 +97,15 @@ export class AppComponent {
     let timePresetModel = this.data[0];
     let start = new Date(this.ticketStartTime).getTime();
     let workTimeMilli = new Date().getTime() - start;
-    let workTimeMin = workTimeMilli / 1000 /60;
-    this.ticketStartTime = undefined;
-    chrome.storage.sync.remove(StorageController.KEY_DATE);
-    this._ordertimeService.setOrderTime(timePresetModel).subscribe((r)=>{
-      console.log(r)
-    });
+    let workTimeHour = workTimeMilli / 1000 / 60 /60;
+    workTimeHour = Math.round((workTimeHour + Number.EPSILON) * 100) / 100;
+    if(workTimeHour > 0.00){
+      this.ticketStartTime = undefined;
+      chrome.storage.sync.remove(StorageController.KEY_DATE);
+      this._ordertimeService.setOrderTime(timePresetModel, workTimeHour);
+    }else{
+      alert("work more")
+    }
   }
 }
 
