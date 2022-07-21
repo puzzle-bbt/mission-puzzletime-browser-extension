@@ -61,10 +61,10 @@
     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
     <tr *matRowDef="let row; columns: displayedColumns;" mat-row (click)="startWork(row)" [ngStyle]="{'background-color': (isPresetSelected() && indexOfElement(this.data, row) == 0) ? 'blue' : '' }"></tr>
   </table>
-  <mat-paginator (page)="handlePage($event)" [length]="this.data?.length" [pageSize]="pageSize"
+  <mat-paginator (page)="handlePage($event)" [length]="this.data.length" [pageSize]="pageSize"
                  class="w-100">
   </mat-paginator>
 </div>
 
-<p *ngIf="this.data?.length ==0">No Elements found. Add a preset to use the application</p>
+<p *ngIf="this.data?.length ==0" class="display-1">No Elements found. Add a preset to use the application</p>
 

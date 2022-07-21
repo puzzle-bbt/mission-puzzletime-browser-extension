@@ -18,7 +18,7 @@ export class AppComponent {
   public pageSize = 5;
   public currentPage = 0;
   title = 'PuzzleBrowserExtension';
-  data: TimePresetModel[];
+  data: TimePresetModel[] = [new TimePresetModel()];
   dataSource: MatTableDataSource<any>;
   ticketStartTime: Date;
   displayedColumns: string[] = [
