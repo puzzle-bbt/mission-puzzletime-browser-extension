@@ -7,6 +7,7 @@ import {StorageController} from "../helper/StorageController";
 import {moveItemInArray} from "@angular/cdk/drag-drop";
 import {OrdertimesService} from "../services/ordertimes.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import { NotifierService } from 'src/services/notifier.service';
 
 @Component({
   selector: 'app-root',
@@ -39,7 +40,9 @@ export class AppComponent {
     "delete"
   ];
 
-  constructor(private _ordertimeService: OrdertimesService) {
+  constructor(private _ordertimeService: OrdertimesService,
+              private _notifierService: NotifierService
+  ) {
   }
 
   ngOnInit() {
@@ -62,6 +65,10 @@ export class AppComponent {
   }
 
   delete(element: TimePresetModel) {
+    if(element == this.data[0]){
+      this._notifierService.openSnackBar("Sie können das Ticket welches sie ausgewählt haben nicht löschen", "ok")
+      return;
+    }
     StorageController.getPresets().then((result) => {
       let index: number = this.indexOfElement(result, element);
       result.splice(index, 1);
@@ -70,7 +77,6 @@ export class AppComponent {
       StorageController.saveValue(StorageController.KEY_PRESETS, this.data);
     });
   }
-
 
   public handlePage(e: any) {
     this.currentPage = e.pageIndex;
@@ -85,6 +91,18 @@ export class AppComponent {
   }
 
   selectRow(row: TimePresetModel) {
+    if(row == this.data[0] && this.isPresetSelected()){
+      this._notifierService.openSnackBar("Das aktuelle Ticket wurde abgebrochen", "ok")
+      this.ticketStartTime = undefined;
+      chrome.storage.sync.remove(StorageController.KEY_DATE);
+      return;
+    }
+
+    if(this.isPresetSelected()){
+      this._notifierService.openSnackBar("Bitte beenden sie zuerst das aktuelle Ticket", "ok")
+      return;
+    }
+
     this.ticketStartTime = new Date();
     let index: number = this.indexOfElement(this.data, row)
     moveItemInArray(this.data, index, 0);
@@ -113,8 +131,9 @@ export class AppComponent {
       this.ticketStartTime = undefined;
       chrome.storage.sync.remove(StorageController.KEY_DATE);
       this._ordertimeService.setOrderTime(timePresetModel, workTimeHour);
+      this._notifierService.openSnackBar("Das Ticket wurde erfolgreich gespeichert", "ok")
     }else{
-      alert("work more")
+      this._notifierService.openSnackBar("Du must mindestens für eine Minute arbeiten bevor du das Ticket speichern kannst", "ok")
     }
   }
 }

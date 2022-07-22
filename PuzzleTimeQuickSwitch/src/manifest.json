@@ -1,7 +1,7 @@
 {
   "name": "PuzzleTime QuickChange",
   "version": "2.0",
-  "description": "You can use this extensions to quick switch between different presets of task",
+  "description": "You can use this extensions to quick switch between different presets of tasks",
   "manifest_version": 3,
   "permissions": [
     "activeTab",

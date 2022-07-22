@@ -3,13 +3,16 @@ import {HttpClient} from "@angular/common/http";
 import {TimePresetModel} from '../models/timePreset';
 import {BASE_URL, NEW_ORDER_TIME, ORDER_TIME} from '../helper/UrlLibrary';
 import {BodyBuilder} from "../helper/BodyBuilder";
+import { NotifierService } from './notifier.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdertimesService {
 
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient,
+              private _notifier:NotifierService
+  ) {}
 
   public getLoginPage(): any {
     return this._http.get(NEW_ORDER_TIME, {responseType: 'text'});
@@ -24,7 +27,7 @@ export class OrdertimesService {
 
       this.getTabID().then((tabID) => {
         if (tabID == -1) {
-          alert("Open " + BASE_URL + " and try again");
+          this._notifier.openSnackBar("Öffne " + BASE_URL + " und versuche es erneut", "ok")
           return;
         }
         chrome.scripting.executeScript({

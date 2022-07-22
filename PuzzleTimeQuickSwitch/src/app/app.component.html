@@ -85,7 +85,7 @@
 
     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
     <tr *matRowDef="let row; columns: displayedColumns;" mat-row
-        (click)="selectRow(row); expandedElement = expandedElement === row ? null : row"
+        (click)="selectRow(row);"
         [ngStyle]="{'background-color': (isPresetSelected() && indexOfElement(this.data, row) == 0) ? '#DEDEDE' : '' }"
         [class.example-expanded-row]="expandedElement === row"
         class="expendable-description-row"
