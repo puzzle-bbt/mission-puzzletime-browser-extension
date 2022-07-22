@@ -18,7 +18,7 @@ export class AppComponent {
   public pageSize = 5;
   public currentPage = 0;
   title = 'PuzzleBrowserExtension';
-  data: TimePresetModel[] = [new TimePresetModel()];
+  data: TimePresetModel[] = [];
   dataSource: MatTableDataSource<any>;
   ticketStartTime: Date;
   displayedColumns: string[] = [
@@ -80,6 +80,7 @@ export class AppComponent {
     let index: number = this.indexOfElement(this.data, row)
     moveItemInArray(this.data, index, 0);
     this.dataSource.data = this.data;
+    this.iterator();
     StorageController.saveValue(StorageController.KEY_PRESETS, this.data);
     StorageController.saveValue(StorageController.KEY_DATE, this.ticketStartTime);
   }

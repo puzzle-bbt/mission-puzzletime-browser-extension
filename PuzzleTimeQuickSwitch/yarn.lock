@@ -1442,6 +1442,14 @@
   "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.11.5.tgz"
   "version" "2.11.5"
 
+"@puzzleitc/puzzle-shell@^1.0.0":
+  "integrity" "sha512-ShI+PQ1/YUAF88VyvqziQVCveDoM7U1Mw8BUiE0GiZFbghSHzj/TUXQ8YgaU1rWwr049qU7HoCjp2KnbdZ8tdA=="
+  "resolved" "https://registry.npmjs.org/@puzzleitc/puzzle-shell/-/puzzle-shell-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "lit-element" "^2.5.1"
+    "lit-html" "^1.4.1"
+
 "@schematics/angular@14.0.6":
   "integrity" "sha512-vc4N6AXANMHUfcj5hOIDwBj4HQUrVSs03ksnznJGt2gkg2ClzJkK5Vg4/QA6lJ09VWSVZCuZ2Kkaua4bsTf6AA=="
   "resolved" "https://registry.npmjs.org/@schematics/angular/-/angular-14.0.6.tgz"
@@ -4067,6 +4075,18 @@
   "integrity" "sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg=="
   "resolved" "https://registry.npmjs.org/lines-and-columns/-/lines-and-columns-1.2.4.tgz"
   "version" "1.2.4"
+
+"lit-element@^2.5.1":
+  "integrity" "sha512-ogu7PiJTA33bEK0xGu1dmaX5vhcRjBXCFexPja0e7P7jqLhTpNKYRPmE+GmiCaRVAbiQKGkUgkh/i6+bh++dPQ=="
+  "resolved" "https://registry.npmjs.org/lit-element/-/lit-element-2.5.1.tgz"
+  "version" "2.5.1"
+  dependencies:
+    "lit-html" "^1.1.1"
+
+"lit-html@^1.1.1", "lit-html@^1.4.1":
+  "integrity" "sha512-B9btcSgPYb1q4oSOb/PrOT6Z/H+r6xuNzfH4lFli/AWhYwdtrgQkQWBbIc6mdnf6E2IL3gDXdkkqNktpU0OZQA=="
+  "resolved" "https://registry.npmjs.org/lit-html/-/lit-html-1.4.1.tgz"
+  "version" "1.4.1"
 
 "loader-runner@^4.2.0":
   "integrity" "sha512-3R/1M+yS3j5ou80Me59j7F9IMs4PXs3VqRrm0TU3AbKPxlmpoY1TNscJV/oGJXo8qCatFGTfDbY6W6ipGOYXfg=="

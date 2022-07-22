@@ -1,4 +1,4 @@
-### Vorgehen
+# Vorgehen
 Da ich noch nie eine eigene Browsererweiterung entwickelt habe, 
 musste ich mich zuerst mit den Grundlagen vertraut machen.
 Zu meiner Überraschung stellte sich das erstellen als recht einfach heraus.
