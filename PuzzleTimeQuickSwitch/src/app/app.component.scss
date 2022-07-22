@@ -3,3 +3,41 @@
   border: transparent;
   color: black;
 }
+
+
+tr.expendable-description-row {
+  height: 0;
+}
+
+tr.expendable-description-row-row:not(.expendable-description-row):hover {
+  background: whitesmoke;
+}
+
+tr.expendable-description-row:not(.expendable-description-row):active {
+  background: #efefef;
+}
+
+.expendable-description-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+
+//
+//.example-element-symbol {
+//  font-weight: bold;
+//  font-size: 40px;
+//  line-height: normal;
+//}
+
+.example-element-description {
+  padding: 16px;
+}
+
+//.example-element-description-attribution {
+//  opacity: 0.5;
+//}

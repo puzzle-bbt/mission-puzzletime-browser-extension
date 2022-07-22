@@ -6,11 +6,19 @@ import {MatPaginator} from "@angular/material/paginator";
 import {StorageController} from "../helper/StorageController";
 import {moveItemInArray} from "@angular/cdk/drag-drop";
 import {OrdertimesService} from "../services/ordertimes.service";
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class AppComponent {
   @ViewChild(MatSort) sort: MatSort;
@@ -21,10 +29,11 @@ export class AppComponent {
   data: TimePresetModel[] = [];
   dataSource: MatTableDataSource<any>;
   ticketStartTime: Date;
+  expandedElement: TimePresetModel | null;
   displayedColumns: string[] = [
+    "expand",
     "puzzleAccount.name",
     "ticket",
-    "description",
     "billable",
     "mealCompensation",
     "delete"
@@ -75,7 +84,7 @@ export class AppComponent {
     this.dataSource.data = this.data.slice(start, Math.min(this.data.length, end));
   }
 
-  startWork(row: TimePresetModel) {
+  selectRow(row: TimePresetModel) {
     this.ticketStartTime = new Date();
     let index: number = this.indexOfElement(this.data, row)
     moveItemInArray(this.data, index, 0);
