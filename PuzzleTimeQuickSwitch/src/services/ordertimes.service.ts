@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {TimePresetModel} from './models/timePreset';
-import {BASE_URL, NEW_ORDER_TIME, ORDER_TIME} from './helper/UrlLibrary';
-import {BodyBuilder} from "./helper/BodyBuilder";
+import {HttpClient} from "@angular/common/http";
+import {TimePresetModel} from '../models/timePreset';
+import {BASE_URL, NEW_ORDER_TIME, ORDER_TIME} from '../helper/UrlLibrary';
+import {BodyBuilder} from "../helper/BodyBuilder";
 
 @Injectable({
   providedIn: 'root'

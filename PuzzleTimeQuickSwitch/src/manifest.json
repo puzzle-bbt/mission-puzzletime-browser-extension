@@ -10,13 +10,16 @@
     "storage",
     "scripting"
   ],
-  "content_scripts":[
+  "content_scripts": [
     {
-      "matches":["<all_urls>"],
-      "js":["background.js"]
+      "matches": [
+        "https://pitc-puzzletime-int.ocp.cloudscale.puzzle.ch/ordertimes/*"
+      ],
+      "js": [
+        "background.js"
+      ]
     }
   ],
-
   "action": {
     "default_icon": {
       "19": "assets/puzzleTime.png",

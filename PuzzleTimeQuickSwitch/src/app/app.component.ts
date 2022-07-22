@@ -5,7 +5,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {StorageController} from "../helper/StorageController";
 import {moveItemInArray} from "@angular/cdk/drag-drop";
-import {OrdertimesService} from "../ordertimes.service";
+import {OrdertimesService} from "../services/ordertimes.service";
 
 @Component({
   selector: 'app-root',
