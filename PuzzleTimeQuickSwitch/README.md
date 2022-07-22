@@ -1,33 +1,21 @@
 # PuzzleTimeQuickSwitch
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.6.
+In order to use this project run first `npm i` and then download the additional libraries
+
 
 ## Install these additional libraries:
-`yarn add -D @types/chrome`
+`yarn add -D @types/chrome` <br>
 `yarn add -D @angular-builders/custom-webpack`
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Then run `ng build` to compile the entire project. 
+After completion, you should see a folder named "puzzle-time-quick-switch" in the dist directory.
 
-## Code scaffolding
+## Import in browser
+The first steps are different based on the browser you are using.
+But in conclusion you just have to open the extensions' page of your browser.
+Then you can navigate to the dist directory and load the extension.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-
+## Chrome 
+To add the extension to a Chrome browser call `chrome://extension` and activate the developer mode.
 

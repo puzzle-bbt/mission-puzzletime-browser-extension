@@ -1,6 +1,6 @@
 <div *ngIf="this.data?.length !=0">
   <div class="w-100 d-flex justify-content-end">
-    <button mat-stroked-button color="warn" [disabled]="!isPresetSelected()" (click)="submit()">Eintrag abschliessen</button>
+    <button class="mx-2" mat-stroked-button color="primary" [disabled]="!isPresetSelected()" (click)="submit()">Eintrag abschliessen</button>
   </div>
 
   <table [dataSource]="dataSource" class="mat-elevation-z8 w-100" mat-table multiTemplateDataRows matSort>
@@ -20,17 +20,6 @@
       </th>
       <td *matCellDef="let element" mat-cell> {{element.ticket}}</td>
     </ng-container>
-
-<!--    <ng-container matColumnDef="description">-->
-<!--      <th *matHeaderCellDef mat-header-cell mat-sort-header="description" sortActionDescription="Sort by description">-->
-<!--        <mat-icon>description</mat-icon>-->
-<!--      </th>-->
-<!--      <td *matCellDef="let element" mat-cell>-->
-<!--        <div class="border w-75">-->
-<!--          {{element.description}}-->
-<!--        </div>-->
-<!--       </td>-->
-<!--    </ng-container>-->
 
     <ng-container matColumnDef="billable">
       <th *matHeaderCellDef mat-header-cell mat-sort-header="billable" sortActionDescription="Sort by bill ability">
@@ -98,4 +87,4 @@
   </mat-paginator>
 </div>
 
-<p *ngIf="this.data?.length == 0" class="lead">No Elements found. Add a preset to use the application</p>
+<p *ngIf="this.data?.length == 0" class="lead">Keine Presets gefunden. Füge eines hinzu um die Anwendung verwenden</p>

@@ -23,5 +23,6 @@ mann müsste lediglich eine mit der von Chromium bereitgestellte vergleichbare A
 ## Nutzen
 Die Erweiterung bietet die möglichkeit bietet schnell und einfach Presets hinzuzufügen, 
 dies geht direkt im PuzzleTime. Sobald ein Preset erstellt wurde, kann dies in der Erweiterung bequem aktiviert werden.
-Das aktivierung des Presets wird dieses farblich hervorgehoben, und der "Eintrag abschlissen" Knopf wird freigeschaltet.
+Nach der aktivierung eines Presets wird dieses farblich hervorgehoben, und der "Eintrag abschlissen" Knopf wird freigeschaltet.
 Sollte ein Preset nicht mehr verwendet werden kann dies ganz einfach mittels des Mülleimers entfernt werden.
+Die Erweiterung ist insofern praktisch da man lediglich einen Tab geöffnet haben muss, in dem man im PuzzleTime angemeldet ist, das PuzzleTime muss also nicht zwingend im Vordergrund sein. 
