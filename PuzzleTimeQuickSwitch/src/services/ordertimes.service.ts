@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {TimePresetModel} from '../models/timePreset';
 import {BASE_URL, NEW_ORDER_TIME, ORDER_TIME} from '../helper/UrlLibrary';
 import {BodyBuilder} from "../helper/BodyBuilder";
-import { NotifierService } from './notifier.service';
+import {NotifierService} from './notifier.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +11,9 @@ import { NotifierService } from './notifier.service';
 export class OrdertimesService {
 
   constructor(private _http: HttpClient,
-              private _notifier:NotifierService
-  ) {}
+              private _notifier: NotifierService
+  ) {
+  }
 
   public getLoginPage(): any {
     return this._http.get(NEW_ORDER_TIME, {responseType: 'text'});
@@ -62,7 +63,14 @@ export class OrdertimesService {
       },
       "body": body,
       "method": "POST",
-    });
+    }).then((r) => {
+        if (r.status === 200) {
+          this._notifier.openSnackBar("Das Ticket wurde erfolgreich gespeichert", "ok")
+        }else{
+          this._notifier.openSnackBar("Ein unerwarteter Fehler ist aufgetreten", "ok")
+        }
+      }
+    );
   }
 
   padTo2Digits(num) {

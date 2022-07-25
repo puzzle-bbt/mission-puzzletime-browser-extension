@@ -131,7 +131,6 @@ export class AppComponent {
       this.ticketStartTime = undefined;
       chrome.storage.sync.remove(StorageController.KEY_DATE);
       this._ordertimeService.setOrderTime(timePresetModel, workTimeHour);
-      this._notifierService.openSnackBar("Das Ticket wurde erfolgreich gespeichert", "ok")
     }else{
       this._notifierService.openSnackBar("Du must mindestens für eine Minute arbeiten bevor du das Ticket speichern kannst", "ok")
     }
