@@ -26,18 +26,11 @@ tr.expendable-description-row:not(.expendable-description-row):active {
   display: flex;
 }
 
-
-//
-//.example-element-symbol {
-//  font-weight: bold;
-//  font-size: 40px;
-//  line-height: normal;
-//}
-
-.example-element-description {
+.preset-description {
   padding: 16px;
 }
 
-//.example-element-description-attribution {
-//  opacity: 0.5;
-//}
+p {
+  margin: 0 0 0 0 !important;
+  padding: 0 0 0 0 !important;
+}
